@@ -1,0 +1,54 @@
+{
+    "name": "주보메이커",
+    "description": "주보메이커_박민우",
+    "version": "1.0",
+    "manifest_version": 3,
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "tabCapture",
+        "storage",
+        "contextMenus"
+
+    ],
+    "externally_connectable": {
+        "ids": [
+          "*"
+        ],"matches": [
+            "https://*.google.com/*",
+            "*://*.chromium.org/*"
+          ],
+        "accepts_tls_channel_id": false
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+
+    "host_permissions": [
+        "*://*/*"
+    ],
+    "action": {
+        "default_title": "Click Me",
+        "default_icon": "icon.png"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "inject/*"
+            ],
+            "matches": []
+        }
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "jquery-3.5.1.js",
+                "myContent.js"
+            ],
+            "run_at": "document_end"
+        }
+    ]
+}

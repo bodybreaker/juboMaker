@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="jquery-3.5.1.js"></script>
+
+    <link rel="stylesheet" href="css/bootstrap.css" crossorigin="anonymous">
+    <script src="css/popper.min.js"></script>
+    <script src="css/bootstrap.js"></script>
+    <script src="css/jquery-ui.js"></script>
+
+    <link href="css/icon.css" rel="stylesheet">
+    <link href="css/jquery-ui.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/datatables.min.css" />
+    <script src="css/datatables.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container p-10">
+        <!-- <button id="closeBT" style="position:absolute; right:10px; top:10px;color:rgb(255, 255, 255);" class="close">X</button> -->
+
+
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="text-center" scope="col" colspan="5">
+                        주보 메이커
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td colspan="2">
+                        <input type="text" class="form-control" placeholder="시작일자">
+                    </td>
+                    <td class="text-center align-middle" colspan="1">
+                        ~
+                    </td>
+                    <td colspan="2">
+                        <input type="text" class="form-control" placeholder="종료일자">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table id="foo-table" class="display" style="width:100%">
+		<thead>
+			<tr>
+                <th>신문사</th>
+                <th>기사제목</th>
+            </tr>
+		</thead>
+		<tbody id="foo-tbody">
+			
+		</tbody>
+    </table>
+
+    <div class="">
+        <input id="articleDate" type="hidden">
+        <button style="float:right" id="button" class="btn btn-warning">삭제</button>
+        <p style="width:10%"></p>
+        <button style="float:right; width:80%; margin-right:10px;" id="startBtn" class="btn btn-success "></button>
+    </div>
+
+
+        <!-- <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="text-center" scope="col" colspan="5">
+                        주보 메이커
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="2">
+                        <input type="text" class="form-control" placeholder="시작일자">
+                    </th>
+                    <th class="text-center align-middle" colspan="1">
+                        ~
+                    </th>
+                    <th colspan="2">
+                        <input type="text" class="form-control" placeholder="종료일자">
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td colspan="2"><img class="mw-100 p-3"
+                            src="http://www.ddaily.co.kr/data/design/logo/toplogo_20131129164710.gif" /></td>
+                    <td colspan="3">시스템반도체 품귀…삼성전자·SK하이닉스, 호재인가 악재인가[IT클로즈업]</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><img class="mw-100 p-3"
+                            src="http://www.ddaily.co.kr/data/design/logo/toplogo_20131129164710.gif" /></td>
+                    <td colspan="3">시스템반도체asdf·SK하이닉스, 호재인가 악재인가[IT클로즈업]</td>
+                </tr>
+            </tbody>
+        </table> -->
+
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
