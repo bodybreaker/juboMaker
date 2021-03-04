@@ -27,6 +27,34 @@ $('#button').click(function () {
 });
 
 
+$('#jsonBT').click(function () {
+
+    textData = JSON.parse(localStorage.jubo);
+
+    startDT = $("#startDT").val();
+    endDT = $("#endDT").val();
+    console.log("시작일자>> "+startDT);
+    console.log("종료일자>> "+endDT);
+
+
+    textData.week_start_date = startDT;
+    textData.week_end_date = endDT;
+
+
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(textData)));
+    element.setAttribute('download', "data.json");
+    
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    
+    element.click();
+    
+    document.body.removeChild(element);
+      
+});
+
+
 
 var btn = $('#startBtn');
 

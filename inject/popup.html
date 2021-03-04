@@ -34,19 +34,7 @@
                 </tr>
             </thead>
 
-            <tbody>
-                <tr>
-                    <td colspan="2">
-                        <input type="text" class="form-control" placeholder="시작일자">
-                    </td>
-                    <td class="text-center align-middle" colspan="1">
-                        ~
-                    </td>
-                    <td colspan="2">
-                        <input type="text" class="form-control" placeholder="종료일자">
-                    </td>
-                </tr>
-            </tbody>
+            
         </table>
 
         <table id="foo-table" class="display" style="width:100%">
@@ -61,12 +49,30 @@
 		</tbody>
     </table>
 
-    <div class="">
+    <div class="container">
         <input id="articleDate" type="hidden">
         <button style="float:right" id="button" class="btn btn-warning">삭제</button>
         <p style="width:10%"></p>
-        <button style="float:right; width:80%; margin-right:10px;" id="startBtn" class="btn btn-success "></button>
+        <button style="float:right; width:80%; margin-right:10px; margin-bottom: 10px;" id="startBtn" class="btn btn-success "></button>
+
+        <table >
+            <tbody>
+                <tr>
+                    <td colspan="2">
+                        <input type="text" class="form-control" id="startDT" placeholder="ex) 2021.02.22">
+                    </td>
+                    <td class="text-center align-middle" colspan="1">
+                        ~
+                    </td>
+                    <td colspan="2">
+                        <input type="text" class="form-control" id="endDT" placeholder="ex) 2021.02.26">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button id="jsonBT" style="width:100%; margin-top:10px;" class="btn btn-success">json파일 다운로드</button>
     </div>
+
 
 
         <!-- <table class="table">
