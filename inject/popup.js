@@ -122,7 +122,6 @@ btn.on("click", function () {
 
     } else if (localStorage.start == "true") {
 
-
         btn.html("기사 스크랩 시작");
         btn.attr('class', 'btn btn-success');
         localStorage.start = false;
@@ -144,9 +143,24 @@ chrome.runtime.onMessage.addListener(
         console.log("from backgroud >> " + JSON.stringify(request));
 
         j = JSON.parse(localStorage.jubo)
-        j.articles[j.articles.length - 1].list.push(request);
-        localStorage.jubo = JSON.stringify(j);
 
+        articleArr = j.articles[j.articles.length-1].list;
+        articleArr.push(request);
+
+        console.log("request ★★★★★★★★★★ ");
+
+        console.log(JSON.stringify(request));
+        var hasURL = articleArr.findIndex(function(el){
+            return el.url;
+        });
+
+        if(hasURL == -1){
+            articleArr.push({
+                "url":window.location.href
+            });
+        }
+        console.log(hasURL);
+        localStorage.jubo = JSON.stringify(j);
         sendResponse("");
     }
 );
