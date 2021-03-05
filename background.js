@@ -66,7 +66,7 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
 
     console.log(info);
     
-    chrome.storage.sync.get(['start'], function(result) {
+    chrome.storage.local.get(['start'], function(result) {
 
         if(result.start){
             menuID = info.menuItemId;
@@ -152,9 +152,14 @@ chrome.runtime.onMessage.addListener(
         // }
 
 
-        chrome.storage.sync.set(request, function() {
+        // chrome.storage.sync.set(request, function() {
+        //     console.log('Value is set to ' + JSON.stringify(request));
+        //  });
+
+    
+        chrome.storage.local.set(request, function() {
             console.log('Value is set to ' + JSON.stringify(request));
-         });
+        });
 
         console.log("from front >> " + JSON.stringify(request));
         sendResponse("");

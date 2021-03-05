@@ -95,17 +95,29 @@ btn.on("click", function () {
         j.articles.push({
             "list": []
         });
-        localStorage.jubo = JSON.stringify(j);
+        
 
         var date = prompt('기사 일자 입력', '02.08');
         alert(date);
+        var publisher = prompt('신문사명', '');
+        alert(publisher);
 
         console.log("기사 일자 >> " + date);
+
+        j.articles[j.articles.length - 1].list.push(
+            {"publisher" : publisher}
+        );
+        j.articles[j.articles.length - 1].list.push(
+            {"date" : date}
+        );
+
+        localStorage.jubo = JSON.stringify(j);
 
         $("#articleDate").css("display", "none");
         btn.html("기사 스크랩 종료");
         btn.attr('class', 'btn btn-danger');
         localStorage.start = true;
+        
         setBackgroundValue({ "start": true });
 
     } else if (localStorage.start == "true") {
