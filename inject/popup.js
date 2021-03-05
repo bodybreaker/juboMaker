@@ -19,6 +19,12 @@ $('#foo-tbody').on('click', 'tr', function () {
     }
 });
 
+$('#foo-tbody').on('dblclick', 'tr', function () {
+    var rowData = table.row(this).data();
+    window.open(rowData[2]);//로고 , 제목 , url
+});
+
+
 $('#button').click(function () {
     var idx = table.row('.selected').index()
     deleteRow(idx);
@@ -150,17 +156,25 @@ chrome.runtime.onMessage.addListener(
         console.log("request ★★★★★★★★★★ ");
 
         console.log(JSON.stringify(request));
-        var hasURL = articleArr.findIndex(function(el){
-            return el.url;
+
+
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            currentURL = tabs[0].url;
+            console.log("현재 탭 URL >>" + currentURL);
+
+            var hasURL = articleArr.findIndex(function(el){
+                return el.url;
+            });
+
+            if(hasURL == -1){
+                articleArr.push({
+                    "url":currentURL
+                });
+            }
+            console.log(hasURL);
+            localStorage.jubo = JSON.stringify(j);
         });
 
-        if(hasURL == -1){
-            articleArr.push({
-                "url":window.location.href
-            });
-        }
-        console.log(hasURL);
-        localStorage.jubo = JSON.stringify(j);
         sendResponse("");
     }
 );
@@ -186,6 +200,8 @@ function settingData() {
 
         logo = "";
         title = "";
+        url = "";
+
 
         list = data.list;
 
@@ -201,14 +217,17 @@ function settingData() {
             if (el.imageLogo != "undefined" && el.imageLogo != undefined) {
                 console.log("신문사로고>>" + el.imageLogo);
                 logo = el.imageLogo;
-
             }
+            if (el.url != "undefined" && el.url != undefined) {
+                console.log("신문사로고>>" + el.url);
+                url = el.url;
+            }            
         })
 
-        imgsrc = "<img src='" + logo + "'width='100'/>"
-
+        imgsrc = "<img src='" + logo + "'width='100'/>";
+        
         table.row.add([
-            imgsrc, title
+            imgsrc, title,url
         ]).draw(false);
         // if(logo!="" && title!=""){
         //     table.row.add([
