@@ -45,18 +45,51 @@ $('#jsonBT').click(function () {
 
     textData.week_start_date = startDT;
     textData.week_end_date = endDT;
+    
+    $.ajax({
+        type: 'POST',
+        url:"http://localhost:3000/up",
+        data: JSON.stringify(textData),
+        xhr:function(){// Seems like the only way to get access to the xhr object
+            var xhr = new XMLHttpRequest();
+            xhr.responseType= 'blob'
+            return xhr;
+        },
+        contentType: "application/json",
+        success: function(data) {
+
+            var binaryData = [];
+            binaryData.push(data);
+            console.log(data);
+            
+            var element = document.createElement('a');
+            //element.href=window.URL.createObjectURL(binaryData);
+            element.href=window.URL.createObjectURL(new Blob(binaryData,{ type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' }))
+            element.setAttribute('download', "out.docx");
+            element.style.display = 'none';
 
 
-    var element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(textData)));
-    element.setAttribute('download', "data.json");
+            document.body.appendChild(element);
+            
+            element.click();
+            
+            document.body.removeChild(element);
+         }
+    });
+
+
+
+
+    // var element = document.createElement('a');
+    // element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(textData)));
+    // element.setAttribute('download', "data.json");
     
-    element.style.display = 'none';
-    document.body.appendChild(element);
+    // element.style.display = 'none';
+    // document.body.appendChild(element);
     
-    element.click();
+    // element.click();
     
-    document.body.removeChild(element);
+    // document.body.removeChild(element);
       
 });
 
@@ -277,3 +310,71 @@ function receiveMessage(event){
 // captuere.js 로 메시지 받기 위함
 window.addEventListener("message",receiveMessage,false);
 
+
+
+/**
+ * 서버에 요청하여 파일을 다운로드 한다. (Chrome, Firefox, IE11 테스트 완료)
+ * @param reqObj 요청정보 -  {
+ *     url: 'url',          (required)
+ *     method: 'GET|POST',  (optional - default:post)
+ *     data: {              (optional)
+ *         key1: value,
+ *         key2: value
+ *     }
+ * }
+ */
+ function requestDownloadFile(reqObj) {
+    if (!reqObj || !reqObj.url) {
+        return;
+    }
+ 
+    var isGetMethod = reqObj.method && reqObj.method.toUpperCase() === 'GET';
+    $.ajax({
+        url: reqObj.url,
+        method: isGetMethod ? 'GET' : 'POST',
+        xhrFields: {
+            responseType: 'arraybuffer'
+        },
+        data: $.param(reqObj.data) // a=1&b=2&c=3 방식
+        // data: JSON.stringify(reqObj.data) // {a:1, b:2, c:3} JSON 방식
+ 
+    }).done(function(data, textStatus, jqXhr) {
+        if (!data) {
+            return;
+        }
+        try {
+            var blob = new Blob([data], { type: jqXhr.getResponseHeader('content-type') });
+            var fileName = getFileName(jqXhr.getResponseHeader('content-disposition'));
+            fileName = decodeURI(fileName);
+ 
+            if (window.navigator.msSaveOrOpenBlob) { // IE 10+
+                window.navigator.msSaveOrOpenBlob(blob, fileName);
+            } else { // not IE
+                var link = document.createElement('a');
+                var url = window.URL.createObjectURL(blob);
+                link.href = url;
+                link.target = '_self';
+                if (fileName) link.download = fileName;
+                document.body.append(link);
+                link.click();
+                link.remove();
+                window.URL.revokeObjectURL(url);
+            }
+        } catch (e) {
+            console.error(e)
+        }
+    });
+}
+function getFileName (contentDisposition) {
+    var fileName = contentDisposition
+        .split(';')
+        .filter(function(ele) {
+            return ele.indexOf('filename') > -1
+        })
+        .map(function(ele) {
+            return ele
+                .replace(/"/g, '')
+                .split('=')[1]
+        });
+    return fileName[0] ? fileName[0] : null
+}
