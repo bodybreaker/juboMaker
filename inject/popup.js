@@ -56,7 +56,7 @@ $('#jsonBT').click(function () {
             return xhr;
         },
         contentType: "application/json",
-        success: function(data) {
+        success: function(data, textStatus, xhr) {
 
             var binaryData = [];
             binaryData.push(data);
@@ -65,7 +65,9 @@ $('#jsonBT').click(function () {
             var element = document.createElement('a');
             //element.href=window.URL.createObjectURL(binaryData);
             element.href=window.URL.createObjectURL(new Blob(binaryData,{ type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' }))
+
             element.setAttribute('download', "out.docx");
+            //element.setAttribute('download');
             element.style.display = 'none';
 
 
