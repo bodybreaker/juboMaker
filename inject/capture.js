@@ -18,16 +18,16 @@ document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend",
 }</style>`);
 
 
-var div = document.createElement('div');
-div.setAttribute("id", "selection")
-document.getElementsByTagName('body')[0].appendChild(div)
+var divv = document.createElement('div');
+divv.setAttribute("id", "selection")
+document.getElementsByTagName('body')[0].appendChild(divv)
 
 
 
 function mouseDownEvt(event) {
         // Update our state
         isSelecting = true;
-        div.classList.remove('complete');
+        divv.classList.remove('complete');
         start.x = event.pageX;
         start.y = event.pageY;
     
@@ -66,7 +66,7 @@ function mouseMoveEvt(event) {
 function mouseUpEvt(event) {
     isSelecting = false;
 
-    div.classList.add('complete')
+    divv.classList.add('complete')
 
     console.log(end.x + ":" + end.y);
 
@@ -109,7 +109,7 @@ function mouseUpEvt(event) {
         console.log(croppedImage);
 
         deleteAllEventListener();
-        div.style.display='none';
+        divv.style.display='none';
 
 
         //popup.js 에게 메세지보냄(데이터세팅)
